@@ -26,6 +26,28 @@ in history. For local development, mock search and mock LLM services return a
 complete labeled sample report, so missing keys do not leave the UI full of
 empty fields.
 
+## How I used Claude during development
+
+I used Claude as a development partner rather than treating it as a
+replacement for engineering judgment. I first provided the product
+requirements and asked it to break the work into a small backend, frontend,
+data-contract, and testing plan. I then used focused prompts to generate and
+refine individual pieces, such as the Pydantic models, FastAPI routes, SSE
+event handling, React state transitions, and mock services.
+
+The most effective workflow was iterative: I ran the application and tests,
+shared the actual errors or behavior with Claude, and asked for a root-cause
+fix instead of accepting a broad rewrite. Claude helped identify edge cases
+such as malformed LLM output, missing API keys, duplicate searches, stale SSE
+responses, and incomplete mock data. I reviewed the suggested changes against
+the requirements, kept the public data contract stable, and verified the
+result with pytest, Vitest, and a production frontend build.
+
+This approach helped me move quickly while still making the important design
+decisions myself: choosing FastAPI and SSE, defining the report schema,
+keeping mock data clearly labeled, and deciding which trade-offs were suitable
+for a small interview project.
+
 ## How to install and run
 
 Requirements: Node.js 18+ and Python 3.12.
